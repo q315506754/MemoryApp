@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditTextPreference
+        android:title="@string/pref_fromNumber_label"
+        android:key="@string/pref_fromNumber_key"
+        android:defaultValue="@string/pref_fromNumber_default"
+        android:inputType="numberSigned"
+        android:singleLine="true" />
+    <EditTextPreference
+        android:title="@string/pref_toNumber_label"
+        android:key="@string/pref_toNumber_key"
+        android:defaultValue="@string/pref_toNumber_default"
+        android:inputType="numberSigned"
+        android:singleLine="true" />
+    <EditTextPreference
+        android:title="@string/pref_arraySize_label"
+        android:key="@string/pref_arraySize_key"
+        android:defaultValue="@string/pref_arraySize_default"
+        android:inputType="numberSigned"
+        android:singleLine="true" />
+
+    <ListPreference
+        android:title="@string/pref_modeChoose_label"
+        android:key="@string/pref_modeChoose_key"
+        android:defaultValue="@string/pref_modeChoose_default"
+        android:entryValues="@array/mode_options_values"
+        android:entries="@array/mode_options" />
+
+</PreferenceScreen>

@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">记忆之旅</string>
+
+    <string name="hello_world">记忆之旅</string>
+    <string name="action_settings">设置</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="startTravel">开启记忆之旅</string>
+    <string name="MODEL_RANDOM">全部随机</string>
+    <string name="MODEL_ALLANDDISORDER">唯一乱序</string>
+    <string name="MODEL_ALLANDORDER">唯一顺序</string>
+    <string name="MODEL_ALLANDREVERSE">唯一逆序</string>
+</resources>

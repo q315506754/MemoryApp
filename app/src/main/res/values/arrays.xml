@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="mode_options">
+        <item>@string/MODEL_RANDOM</item>
+        <item>@string/MODEL_ALLANDDISORDER</item>
+        <item>@string/MODEL_ALLANDORDER</item>
+        <item>@string/MODEL_ALLANDREVERSE</item>
+    </string-array>
+
+    <string-array name="mode_options_values">
+        <item>MODEL_RANDOM</item>
+        <item>MODEL_ALLANDDISORDER</item>
+        <item>MODEL_ALLANDORDER</item>
+        <item>MODEL_ALLANDREVERSE</item>
+    </string-array>
+
+</resources>
