@@ -28,6 +28,13 @@
     <string name="pref_modeChoose_key" translatable="false">pref_modeChoose_key</string>
     <string name="pref_modeChoose_label" >默认模式</string>
     <string name="pref_modeChoose_default" >MODEL_ALLANDDISORDER</string>
+    <string name="title_activity_process">ProcessActivity</string>
+    <string name="title_activity_result">ResultActivity</string>
+    <string name="knowButton">通过</string>
+    <string name="finishButton">结束</string>
+    <string name="hintButton">提示</string>
+    <string name="notAvailableButton">无法使用</string>
+    <string name="overButton">结束</string>
 
 
 </resources>

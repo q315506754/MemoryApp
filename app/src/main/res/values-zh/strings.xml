@@ -9,4 +9,9 @@
     <string name="MODEL_ALLANDDISORDER">唯一乱序</string>
     <string name="MODEL_ALLANDORDER">唯一顺序</string>
     <string name="MODEL_ALLANDREVERSE">唯一逆序</string>
+    <string name="knowButton">通过</string>
+    <string name="finishButton">结束</string>
+    <string name="hintButton">提示</string>
+    <string name="notAvailableButton">无法使用</string>
+    <string name="overButton">结束</string>
 </resources>
