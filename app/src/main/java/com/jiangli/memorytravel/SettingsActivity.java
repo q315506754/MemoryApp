@@ -38,6 +38,16 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_toNumber_key)));
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_arraySize_key)));
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_modeChoose_key)));
+
+
+        Preference preference = findPreference(getString(R.string.pref_enable_vibrate_key));
+        preference.setOnPreferenceChangeListener(this);
+        onPreferenceChange(preference,
+                PreferenceManager
+                        .getDefaultSharedPreferences(preference.getContext())
+                        .getBoolean(preference.getKey(), Boolean.parseBoolean(preference.getContext().getString(R.string.pref_enable_vibrate_default))));
+
+
     }
 
     private void bindPreferenceSummaryToValue(Preference preference) {
@@ -67,6 +77,11 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         } else {
             // For other preferences, set the summary to the value's simple string representation.
             preference.setSummary(stringValue);
+        }
+
+        if (value instanceof Boolean) {
+            Boolean bl = (Boolean)value;
+            preference.setSummary(bl?"已启用":"已禁用");
         }
         return true;
     }

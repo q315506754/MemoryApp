@@ -1,7 +1,6 @@
 package com.jiangli.memorytravel.core;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -110,6 +109,7 @@ public class MemoryTest {
             if (mData == null) {
                 mData = new MemoryAnalyseResult();
                 mData.setData(key);
+                mData.setIdx(counter);
                 mData.setFirstAppearedTime(counter);
                 List<Integer> appearedTime = new ArrayList<Integer>();
                 appearedTime.add(counter);

@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v4.widget.CursorAdapter;
 import android.os.Bundle;
+import android.support.v4.widget.CursorAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,19 +13,31 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.jiangli.memorytravel.core.IdxComparator;
+import com.jiangli.memorytravel.core.MaxComparator;
 import com.jiangli.memorytravel.core.MemoryAnalyseResult;
 import com.jiangli.memorytravel.core.MemoryResult;
 import com.jiangli.memorytravel.core.MemoryTest;
 
+import java.util.Collections;
 import java.util.List;
 
 
 public class ResultActivity extends Activity {
     public static final String TAG = ResultActivity.class.getSimpleName();
     private ListView listView;
+    private static final int sortMode_by_costtime=1;
+    private static final int sortMode_by_idx=2;
+
+    private int sortMode=sortMode_by_costtime;
+    private Button orderByTsBtn;
+    private Button orderByIdxBtn;
+    private List<MemoryAnalyseResult> analyse;
+    private BaseAdapter baseAdapter;
 
 
     class DataApdapter  extends CursorAdapter {
@@ -54,18 +66,54 @@ public class ResultActivity extends Activity {
 
         final Context context = ResultActivity.this;
         Intent intent = getIntent();
+        int totalCounts = intent.getIntExtra("totalCounts", -1);
 
         final List<MemoryResult> results = (List<MemoryResult>) intent.getSerializableExtra("results");
         Log.d(TAG, results.toString());
         Log.d(TAG, results.size() + "");
 
-        final List<MemoryAnalyseResult> analyse = MemoryTest.analyse(results);
+        analyse = MemoryTest.analyse(results);
+
+        String result_summary1 = "";
+        String result_summary2 = "";
+        if (analyse.size()>0) {
+            MemoryAnalyseResult maxTsRs = analyse.get(0);
+            MemoryAnalyseResult minTsRs = analyse.get(analyse.size()-1);
+            long sumTs = 0l;
+            for (MemoryAnalyseResult one : analyse) {
+                for (Long lOne : one.getCostime()) {
+                    sumTs = sumTs + lOne;
+                }
+            }
+            long avgTs = sumTs/ analyse.size();
+
+            long t_sumTs = sumTs/1000;
+            long seconds = t_sumTs%60;
+            t_sumTs/=60;
 
 
-        DataApdapter apdapter = new DataApdapter(this, null, 0);
+            result_summary1 = context.getString(
+                    R.string.format_result_summary1,
+                    analyse.size()+"/"+totalCounts,
+                    sumTs, t_sumTs+"分"+seconds+"秒");
+             result_summary2 = context.getString(
+                    R.string.format_result_summary2,
+                     minTsRs.getCostime().get(0),
+                     maxTsRs.getCostime().get(0),avgTs);
+
+        }
+        orderByTsBtn = (Button) findViewById(R.id.orderByTsBtn);
+        orderByIdxBtn = (Button) findViewById(R.id.orderByIdxBtn);
+
+//        DataApdapter apdapter = new DataApdapter(this, null, 0);
     // Get a reference to the ListView, and attach this adapter to it.
+//        listView = (ListView) findViewById(R.id.listview_results);
+//        listView = (ListView) findViewById(R.id.listview_results);
+
         listView = (ListView) findViewById(R.id.listview_results);
-        listView.setAdapter(new BaseAdapter() {
+        //                Log.d(TAG,convertView.toString());
+//                Log.d(TAG,parent.toString());
+        baseAdapter = new BaseAdapter() {
             @Override
             public int getCount() {
                 return analyse.size();
@@ -83,14 +131,14 @@ public class ResultActivity extends Activity {
 
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
-                MemoryAnalyseResult item = (MemoryAnalyseResult)getItem(position);
-                Log.d(TAG,item.toString());
+                MemoryAnalyseResult item = (MemoryAnalyseResult) getItem(position);
+                Log.d(TAG, item.toString());
 //                Log.d(TAG,convertView.toString());
 //                Log.d(TAG,parent.toString());
                 View view = LayoutInflater.from(context).inflate(R.layout.list_item_result, parent, false);
 
                 setTVVal(view, R.id.list_item_num, item.getData());
-                setTVVal(view, R.id.list_item_ts, item.getCostime());
+                setTVVal(view, R.id.list_item_ts, item.getCostime().get(0));
                 setTVVal(view, R.id.list_item_ts_unit, "ms");
                 return view;
             }
@@ -99,7 +147,10 @@ public class ResultActivity extends Activity {
                 TextView viewById = (TextView) view.findViewById(list_item_num);
                 viewById.setText(String.valueOf(data));
             }
-        });
+        };
+        listView.setAdapter(baseAdapter);
+
+        paintBtnUI();
     }
 
     @Override
@@ -124,7 +175,42 @@ public class ResultActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void paintBtnUI() {
+        switch (sortMode) {
+            case sortMode_by_costtime:{
+                orderByTsBtn.setEnabled(false);
+                orderByIdxBtn.setEnabled(true);
+                break;
+            }
+            case sortMode_by_idx:{
+                orderByTsBtn.setEnabled(true);
+                orderByIdxBtn.setEnabled(false);
+                break;
+            }
+        }
+    }
+
+    public void orderByIdxButton(View view) {
+        sortMode = sortMode_by_idx;
+        paintBtnUI();
+
+        Collections.sort(analyse, new IdxComparator());
+
+        baseAdapter.notifyDataSetChanged();
+    }
+
+    public void orderByTsButton(View view) {
+        sortMode = sortMode_by_costtime;
+        paintBtnUI();
+
+        Collections.sort(analyse, new MaxComparator());
+
+        baseAdapter.notifyDataSetChanged();
+    }
+
     public void finishActivity(View view) {
+
+
         finish();
     }
 }

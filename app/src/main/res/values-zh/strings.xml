@@ -14,4 +14,7 @@
     <string name="hintButton">提示</string>
     <string name="notAvailableButton">无法使用</string>
     <string name="overButton">结束</string>
+    <string name="pref_enable_vibrate_label">震动</string>
+    <string name="orderByTsButton">按耗时排列</string>
+    <string name="orderByIdxButton">按出现顺序</string>
 </resources>

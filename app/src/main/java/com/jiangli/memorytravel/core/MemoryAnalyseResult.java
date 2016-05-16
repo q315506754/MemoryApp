@@ -5,6 +5,7 @@ import java.util.List;
 public class MemoryAnalyseResult {
     // key
     int data;
+    int idx;
 
     int firstAppearedTime;
     List<Integer> appearedTime;
@@ -35,6 +36,15 @@ public class MemoryAnalyseResult {
         this.minimumCostTime = minimumCostTime;
         this.maximumCostTime = maximumCostTime;
         this.averageCostTime = averageCostTime;
+    }
+
+
+    public int getIdx() {
+        return idx;
+    }
+
+    public void setIdx(int idx) {
+        this.idx = idx;
     }
 
     /**

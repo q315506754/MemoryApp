@@ -1,4 +1,4 @@
-<resources>
+<resources  xmlns:xliff="http://schemas.android.com/apk/res-auto">
     <string name="app_name">MemoryTravel</string>
 
     <string name="hello_world">Hello world!</string>
@@ -28,6 +28,7 @@
     <string name="pref_modeChoose_key" translatable="false">pref_modeChoose_key</string>
     <string name="pref_modeChoose_label" >默认模式</string>
     <string name="pref_modeChoose_default" >MODEL_ALLANDDISORDER</string>
+
     <string name="title_activity_process">ProcessActivity</string>
     <string name="title_activity_result">ResultActivity</string>
     <string name="knowButton">通过</string>
@@ -36,5 +37,14 @@
     <string name="notAvailableButton">无法使用</string>
     <string name="overButton">结束</string>
 
+    <string name="pref_enable_vibrate_key" translatable="false">pref_enable_vibrate_key</string>
+    <string name="pref_enable_vibrate_label">震动</string>
+    <string name="pref_enable_vibrate_default" >true</string>
+
+    <!-- Date format for displaying day of week and date (i.e. Mon Jun 1) [CHAR LIMIT=20] -->
+    <string name="format_result_summary1">通过<xliff:g>%1$s</xliff:g> 总耗时:<xliff:g>%2$s</xliff:g>ms=<xliff:g>%3$s</xliff:g></string>
+    <string name="format_result_summary2">耗时<xliff:g>%1$s</xliff:g>~<xliff:g>%2$s</xliff:g>ms 平均:<xliff:g>%3$s</xliff:g>ms</string>
+    <string name="orderByTsButton">按耗时排列</string>
+    <string name="orderByIdxButton">按出现顺序</string>
 
 </resources>

@@ -29,4 +29,10 @@
         android:entryValues="@array/mode_options_values"
         android:entries="@array/mode_options" />
 
+    <SwitchPreference
+        android:title="@string/pref_enable_vibrate_label"
+        android:key="@string/pref_enable_vibrate_key"
+        android:defaultValue="@string/pref_enable_vibrate_default"
+     />
+
 </PreferenceScreen>

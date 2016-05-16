@@ -11,6 +11,21 @@
         android:layout_weight="1"
         android:gravity="center"
         >
+        <TextView
+            android:id="@+id/result_summary1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:text="通过0/0 总耗时:1234ms=3分20秒"
+            android:textSize="20dp"
+            />
+        <TextView
+            android:id="@+id/result_summary2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="20dp"
+            android:text="耗时最低1234ms 耗时最高1234ms"/>
     </LinearLayout>
 
 
@@ -33,20 +48,40 @@
         android:orientation="horizontal"
         android:layout_weight="1"
         android:gravity="center">
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:text="@string/notAvailableButton"-->
+            <!--android:background="@drawable/shape"-->
+            <!--android:layout_margin="10dp"-->
+            <!--android:id="@+id/myBtn1"-->
+            <!--android:enabled="false"-->
+            <!--/>-->
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/notAvailableButton"
-            android:background="@color/sunshine_light_blue"
+            android:text="@string/orderByTsButton"
+            android:background="@drawable/shape"
             android:layout_margin="10dp"
-            android:id="@+id/myBtn1"
+            android:id="@+id/orderByTsBtn"
             android:enabled="false"
+            android:onClick="orderByTsButton"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/orderByIdxButton"
+            android:background="@drawable/shape"
+            android:layout_margin="10dp"
+            android:id="@+id/orderByIdxBtn"
+            android:enabled="false"
+            android:onClick="orderByIdxButton"
             />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/overButton"
-            android:background="@color/sunshine_light_blue"
+            android:background="@drawable/shape"
             android:layout_margin="10dp"
             android:id="@+id/overBtn"
             android:onClick="finishActivity"
