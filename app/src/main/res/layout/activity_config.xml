@@ -111,7 +111,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/startTravel"
-            android:background="@color/sunshine_blue"
+            android:background="@drawable/pass_selector"
             android:layout_margin="10dp"
             android:id="@+id/startMemoryBtn"
             />

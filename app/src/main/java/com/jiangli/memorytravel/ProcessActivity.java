@@ -1,23 +1,27 @@
 package com.jiangli.memorytravel;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Vibrator;
-import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jiangli.memorytravel.core.MemoryResult;
 import com.jiangli.memorytravel.core.MemoryTest;
+import com.jiangli.memorytravel.util.Utility;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -43,6 +47,29 @@ public class ProcessActivity extends Activity {
         }
     };
     private Thread thread;
+
+    @Override
+    public void onBackPressed() {
+        final Activity activity = this;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle("确定返回到主界面吗?")
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // 点击“确认”后的操作
+                        activity.finish();
+                    }
+                })
+                .setNegativeButton("返回", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // 点击“返回”后的操作,这里不设置没有任何操作
+                    }
+                });
+
+        builder.show();
+    }
 
     @Override
     protected void onStart() {
@@ -142,7 +169,7 @@ public class ProcessActivity extends Activity {
         ((Button) findViewById(R.id.knowBtn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                vibrater(180);
+                vibrater(80);
 
                 int data = generate[curIdx];
                 resultList.add(new MemoryResult(data, prefTs, System.currentTimeMillis()));
@@ -177,15 +204,7 @@ public class ProcessActivity extends Activity {
     }
 
     private void vibrater(int i) {
-        Context context = this;
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean aBoolean = prefs.getBoolean(context.getString(R.string.pref_enable_vibrate_key),
-                Boolean.parseBoolean(context.getString(R.string.pref_enable_vibrate_default)));
-        if (aBoolean) {
-            final Vibrator vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
-            long [] pattern = {100, i};   // 停止 开启 停止 开启
-            vibrator.vibrate(pattern,-1);
-        }
+        Utility.vibrate(this, i);
     }
 
     private void refreshPage() {
@@ -219,5 +238,54 @@ public class ProcessActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    class MyDialog  extends Dialog {
+
+        public MyDialog(Context context) {
+            super(context, R.style.ImageScale);
+        }
+
+        public MyDialog(Context context, int theme) {
+            super(context, theme);
+        }
+
+        protected MyDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
+            super(context, cancelable, cancelListener);
+        }
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.hint_dialog);
+        }
+
+        @Override
+        public boolean onTouchEvent(MotionEvent event) {
+            dismiss();
+            return true;
+        }
+
+    }
+    public void hintFired(View view) {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View imgEntryView = inflater.inflate(R.layout.hint_dialog, null); // 加载自定义的布局文件
+        ImageView img1 = (ImageView)imgEntryView.findViewById(R.id.hint_dialog_imageView);
+
+
+//        final AlertDialog dialog = new AlertDialog.Builder(this).create();
+        final MyDialog dialog = new MyDialog(this);
+//        img1.setImageBitmap(bm);
+//        dialog.setView(imgEntryView); // 自定义dialog
+        dialog.show();
+
+
+
+        // 点击布局文件（也可以理解为点击大图）后关闭dialog，这里的dialog不需要按钮
+        imgEntryView.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View paramView) {
+                dialog.cancel();
+            }
+        });
     }
 }

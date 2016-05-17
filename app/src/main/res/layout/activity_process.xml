@@ -37,32 +37,16 @@
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_weight="3"
                 >
 
-                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_weight="3"
-                    >
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="\???"
-                        android:gravity="center"
-                        android:id="@+id/contentDisplayed"
-                        android:textSize="65dp"
-                        android:textColor="#3A6EA5"
-                        />
-                </LinearLayout>
 
                 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:orientation="horizontal"
-                    android:layout_weight="3"
+                    android:layout_weight="1"
                     >
                 <TextView
                     android:layout_width="match_parent"
@@ -74,6 +58,23 @@
                     android:textColor="#000000"/>
                 </LinearLayout>
 
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:layout_weight="3"
+                    >
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="\???"
+                        android:gravity="center"
+                        android:id="@+id/contentDisplayed"
+                        android:textSize="75dp"
+                        android:textColor="#3A6EA5"
+                        />
+                </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>
@@ -97,6 +98,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/hintButton"
                 android:layout_margin="10dp"
+                android:onClick="hintFired"
                 />
         </LinearLayout>
     </LinearLayout>
@@ -106,13 +108,14 @@
         android:layout_height="0dp"
         android:orientation="vertical"
         android:layout_weight="2"
+        android:background="@drawable/touch_selector"
         >
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/knowButton"
-            android:background="@drawable/shape"
+            android:background="@drawable/pass_selector"
             android:layout_margin="10dp"
             android:textSize="40dp"
             android:id="@+id/knowBtn"

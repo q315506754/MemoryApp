@@ -9,6 +9,8 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
+import com.jiangli.memorytravel.util.Utility;
+
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
  * handset devices, settings are presented as a single list. On tablets,
@@ -42,10 +44,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
 
         Preference preference = findPreference(getString(R.string.pref_enable_vibrate_key));
         preference.setOnPreferenceChangeListener(this);
-        onPreferenceChange(preference,
-                PreferenceManager
-                        .getDefaultSharedPreferences(preference.getContext())
-                        .getBoolean(preference.getKey(), Boolean.parseBoolean(preference.getContext().getString(R.string.pref_enable_vibrate_default))));
+        onPreferenceChange(preference, Utility.getPreferenceBoolean(preference, R.string.pref_enable_vibrate_default));
 
 
     }

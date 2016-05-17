@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.jiangli.memorytravel.core.IdxComparator;
@@ -76,8 +77,11 @@ public class ResultActivity extends Activity {
 
         String result_summary1 = "";
         String result_summary2 = "";
+        long maximumCostTime = 0;
+        long avgCostTime = 0;
         if (analyse.size()>0) {
             MemoryAnalyseResult maxTsRs = analyse.get(0);
+             maximumCostTime = maxTsRs.getMaximumCostTime();
             MemoryAnalyseResult minTsRs = analyse.get(analyse.size()-1);
             long sumTs = 0l;
             for (MemoryAnalyseResult one : analyse) {
@@ -85,7 +89,7 @@ public class ResultActivity extends Activity {
                     sumTs = sumTs + lOne;
                 }
             }
-            long avgTs = sumTs/ analyse.size();
+            avgCostTime = sumTs/ analyse.size();
 
             long t_sumTs = sumTs/1000;
             long seconds = t_sumTs%60;
@@ -99,20 +103,25 @@ public class ResultActivity extends Activity {
              result_summary2 = context.getString(
                     R.string.format_result_summary2,
                      minTsRs.getCostime().get(0),
-                     maxTsRs.getCostime().get(0),avgTs);
+                     maxTsRs.getCostime().get(0),avgCostTime);
 
         }
+
+
+        ((TextView)findViewById(R.id.result_summary1)).setText(result_summary1);
+        ((TextView)findViewById(R.id.result_summary2)).setText(result_summary2);
+
         orderByTsBtn = (Button) findViewById(R.id.orderByTsBtn);
         orderByIdxBtn = (Button) findViewById(R.id.orderByIdxBtn);
 
 //        DataApdapter apdapter = new DataApdapter(this, null, 0);
     // Get a reference to the ListView, and attach this adapter to it.
-//        listView = (ListView) findViewById(R.id.listview_results);
-//        listView = (ListView) findViewById(R.id.listview_results);
 
         listView = (ListView) findViewById(R.id.listview_results);
         //                Log.d(TAG,convertView.toString());
 //                Log.d(TAG,parent.toString());
+        final long finalMaximumCostTime = maximumCostTime;
+        final long finalAvgCostTime = avgCostTime;
         baseAdapter = new BaseAdapter() {
             @Override
             public int getCount() {
@@ -140,6 +149,12 @@ public class ResultActivity extends Activity {
                 setTVVal(view, R.id.list_item_num, item.getData());
                 setTVVal(view, R.id.list_item_ts, item.getCostime().get(0));
                 setTVVal(view, R.id.list_item_ts_unit, "ms");
+
+                ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.list_item_progress);
+                progressBar.setMax((int) finalMaximumCostTime);
+                progressBar.setProgress((int) item.getMaximumCostTime());
+                progressBar.setSecondaryProgress((int) finalAvgCostTime);
+                Log.e(TAG, progressBar.getProgress() + "/" + progressBar.getMax());
                 return view;
             }
 

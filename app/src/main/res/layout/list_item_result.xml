@@ -11,7 +11,7 @@
 
     <FrameLayout
         android:layout_width="60dp"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <!--<ImageView-->
             <!--android:id="@+id/list_item_icon"-->
             <!--android:layout_width="wrap_content"-->
@@ -23,13 +23,22 @@
             <!--android:fontFamily="sans-serif-condensed"-->
             <!--android:textAppearance="?android:textAppearanceLarge"-->
             <!--android:text="1111"/>-->
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:id="@+id/list_item_progress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:minHeight="100dip"
+            android:maxHeight="100dip"
+             />
     </FrameLayout>
 
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="0dp"
         android:layout_weight="7"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center">
 
         <TextView
             android:id="@+id/list_item_num"
@@ -38,6 +47,8 @@
             android:fontFamily="sans-serif-condensed"
             android:textAppearance="?android:textAppearanceLarge"
             android:text="1111"/>
+
+
 
         <TextView
             android:id="@+id/list_item_num2"
@@ -53,7 +64,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="5"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center">
 
         <TextView
             android:id="@+id/list_item_ts"

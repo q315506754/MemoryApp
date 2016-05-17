@@ -1,18 +1,23 @@
 package com.jiangli.memorytravel;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.Arrays;
 
@@ -26,11 +31,11 @@ public class ConfigActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config);
 
-       final Context context = ConfigActivity.this;
+        final Context context = ConfigActivity.this;
         loadPageByPref(context);
 
 
-        ((Button)findViewById(R.id.startMemoryBtn)).setOnClickListener(new View.OnClickListener() {
+        ((Button) findViewById(R.id.startMemoryBtn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "startMemoryBtn...");
@@ -50,7 +55,7 @@ public class ConfigActivity extends ActionBarActivity {
             }
 
             private int getIntValue(int fromNumber) {
-                return Integer.parseInt( ((EditText) findViewById(fromNumber)).getText().toString());
+                return Integer.parseInt(((EditText) findViewById(fromNumber)).getText().toString());
             }
         });
     }
@@ -66,7 +71,7 @@ public class ConfigActivity extends ActionBarActivity {
 
         String[] stringArray = getResources().getStringArray(R.array.mode_options_values);
         int i = Arrays.binarySearch(stringArray, pref_fromNumber_value);
-        ((Spinner)findViewById( R.id.modeChoose)).setSelection(i);
+        ((Spinner) findViewById(R.id.modeChoose)).setSelection(i);
     }
 
     @Override
@@ -76,11 +81,12 @@ public class ConfigActivity extends ActionBarActivity {
         final Context context = ConfigActivity.this;
         loadPageByPref(context);
     }
+
     private void setEditTestByPrefer(Context context, int pref_key, int pref_default, int edit_id) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String pref_fromNumber_value = prefs.getString(context.getString(pref_key),
                 context.getString(pref_default));
-        ((EditText)findViewById(edit_id)).setText(pref_fromNumber_value);
+        ((EditText) findViewById(edit_id)).setText(pref_fromNumber_value);
     }
 
 
@@ -109,4 +115,46 @@ public class ConfigActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+    private long mExitTime;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if ((System.currentTimeMillis() - mExitTime) > 2000) {
+                Object mHelperUtils;
+//                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                mExitTime = System.currentTimeMillis();
+            } else {
+                finish();
+            }
+//            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onBackPressed() {
+        final Activity activity = this;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle("确认退出吗？")
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // 点击“确认”后的操作
+                        activity.finish();
+                    }
+                })
+                .setNegativeButton("返回", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // 点击“返回”后的操作,这里不设置没有任何操作
+                    }
+                });
+
+        builder.show();
+    }
+
+
 }
